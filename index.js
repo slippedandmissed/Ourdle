@@ -7,6 +7,12 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const port = process.env.PORT || 8000;
 
+app.get("/config.js", (_, res) => {
+    res.send(`const CONFIG=${JSON.stringify({
+        letterCount: 5,
+    })}`);
+});
+
 app.use("/", express.static("./frontend"));
 
 const valid_guesses = fs.readFileSync('valid_guesses.txt', 'utf8').split("\n");

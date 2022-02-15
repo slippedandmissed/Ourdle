@@ -1,5 +1,3 @@
-const letterCount = 5;
-
 const socket = io();
 let rows;
 let currentRow;
@@ -134,7 +132,7 @@ class Row {
 
     constructor() {
         this.elt = $("<div class='row'>");
-        for (let i = 0; i < letterCount; i++) {
+        for (let i = 0; i < CONFIG.letterCount; i++) {
             this.elt.append($("<div class='box'>"));
         }
         this.elt.removeClass("hidden");
@@ -142,7 +140,7 @@ class Row {
     }
 
     addLetter(letter) {
-        if (this.chars.length >= letterCount) {
+        if (this.chars.length >= CONFIG.letterCount) {
             return;
         }
         this.elt.find(".box").eq(this.chars.length).text(letter);
@@ -163,7 +161,7 @@ class Row {
     }
 
     submit() {
-        if (this.chars.length === letterCount) {
+        if (this.chars.length === CONFIG.letterCount) {
             socket.emit("validate", this.chars, currentRow);
         }
     }
