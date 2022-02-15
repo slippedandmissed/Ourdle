@@ -26,16 +26,23 @@ for (let i=possible_answers.length-1; i>=0; i--) {
 
 let word;
 
+let log;
+
 const getRandomWord = () => {
     word = possible_answers[Math.floor(Math.random()*possible_answers.length)].toUpperCase();
+    log = [];
 }    
 
 getRandomWord();
+
 
 io.on("connection", (socket) => {
     console.log(`Got connection from socket ${socket.id}`);
 
     socket.emit("newWord");
+    for (let i=0; i<log.length; i++) {
+        socket.emit("validation", log[i][0], i, log[i][1]);
+    }
 
     socket.on("newRandomWord", () => {
         getRandomWord();
@@ -47,6 +54,7 @@ io.on("connection", (socket) => {
             socket.emit("invalidNewWord");
             return;
         }
+        log = [];
         word = str.toUpperCase();
         io.emit("newWord");
     });
@@ -80,6 +88,7 @@ io.on("connection", (socket) => {
                 types[i] = "yellow";
             }
         }
+        log.push([types, str]);
         io.emit("validation", types, i, str);
     });
 });
