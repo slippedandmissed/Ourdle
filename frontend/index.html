@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js"
+        integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg"
+        crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+    <title>Ourdle 😊</title>
+</head>
+
+<body>
+    <main>
+        <h1>Ourdle 😊</h1>
+        <div id="grid"></div>
+        <div id="keys">
+            <div class="keyRow"><div>Q</div><div>W</div><div>E</div><div>R</div><div>T</div><div>Y</div><div>U</div><div>I</div><div>O</div><div>P</div></div>
+            <div class="keyRow"><div>A</div><div>S</div><div>D</div><div>F</div><div>G</div><div>H</div><div>J</div><div>K</div><div>L</div></div>
+            <div class="keyRow"><div>Z</div><div>X</div><div>C</div><div>V</div><div>B</div><div>N</div><div>M</div></div>
+            <div class="keyRow"><div id="backspace">Backspace</div><div id="enter">Enter</div></div>
+        </div>
+        <div id="controls">
+            <form id="newWord">
+                <input autocomplete="off" maxlength="5" size="5" type="text">
+                <button type="submit">Set Word</button>
+            </form>
+            <button id="newRandomWord">New Random Word</button>
+        </div>
+        <div id="overlay" class="overlay-hidden">
+            <div id="mask"></div>
+            <div id="overlayContent">
+                <div id="win" class="hidden">
+                    <h1>You Win! 🥳</h1>
+                    <span>You got it in <span id="guessCount"></span>!</span>
+                </div>
+                <div id="newWord" class="hidden">
+                    <h1>A New Word has been Set 😨</h1>
+                    <span>Good luck!</span>
+                </div>
+                <div id="invalidWord" class="hidden">
+                    <h1>That's not in the word list 😭</h1>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

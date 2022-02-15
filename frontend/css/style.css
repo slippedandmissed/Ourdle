@@ -1,0 +1,217 @@
+*,
+*::after,
+*::after {
+    box-sizing: border-box;
+}
+
+*:focus {
+    outline: none;
+}
+
+button,
+input,
+textarea {
+    font-size: inherit;
+    color: inherit;
+}
+
+button:not(:disabled) {
+    cursor: pointer;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+    background-color: rgb(37, 0, 37);
+    color: white;
+    font-size: 1.5em;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+#grid {
+    margin: 20px;
+    color: black;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.row.box,
+button,
+input {
+    box-shadow: 2px 2px 20px black;
+}
+
+.row .box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    width: min(100px, 10vw);
+    height: min(100px, 10vw);
+    font-size: min(50px, 7vw);
+    font-weight: bold;
+    background-color: #e0e0e0;
+    margin: 5px;
+    cursor: text;
+}
+
+#keys {
+    margin-top: 100px;
+    font-size: 25px;
+    color: black;
+    --key-width: min(50px, 8vw);
+    --margin: 2px;
+}
+
+#keys .keyRow div {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--key-width);
+    height: var(--key-width);
+    background-color: #e0e0e0;
+    margin: var(--margin);
+    transition: transform 0.2s ease;
+    border: 1px solid black;
+}
+
+#keys .keyRow div:hover {
+    transform: scale(1.1);
+}
+
+#keys .keyRow div {
+    cursor: pointer;
+}
+
+#keys .keyRow:last-of-type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#keys .keyRow:last-of-type div {
+    width: auto;
+    padding: 0 20px;
+    margin: 10px;
+}
+
+#keys .keyRow:nth-of-type(2) {
+    margin-left: calc((var(--key-width) + 2 * var(--margin)) / 4);
+}
+
+#keys .keyRow:nth-of-type(3) {
+    margin-left: calc((var(--key-width) + 2 * var(--margin)) / 2);
+}
+
+#controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 100px 0;
+}
+
+#controls > * {
+    margin: 10px;
+}
+
+input,
+button {
+    color: black;
+    border: none;
+    padding: 10px 20px;
+}
+
+input {
+    text-transform: uppercase;
+}
+
+button {
+    background-color: rgb(175, 255, 248);
+    transition: transform 0.2s ease;
+}
+
+#overlay,
+#mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+#mask {
+    background-color: #00000080;
+}
+
+#overlayContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    width: min(500px, 90vw);
+    height: min(500px, 90vh);
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+#overlay {
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.overlay-hidden {
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+#overlayContent > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.green {
+    background-color: rgb(147, 255, 147)!important;
+}
+
+.yellow {
+    background-color: rgb(255, 255, 168)!important;
+}
+
+.grey {
+    background-color: #8a8a8a!important;
+}
