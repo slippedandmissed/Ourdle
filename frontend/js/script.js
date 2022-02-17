@@ -73,6 +73,7 @@ socket.on("validation", (types, i, str) => {
     for (let i=0; i<str.length; i++) {
         const elt = $(`div[data-letter='${str[i]}']`);
         if (!elt.hasClass("green")) {
+            elt.removeClass("grey");
             elt.removeClass("yellow");
             elt.addClass(types[i]);
         }
