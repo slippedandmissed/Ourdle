@@ -230,10 +230,6 @@ button:not(:disabled):hover {
     margin: 20px;
 }
 
-#pickRoom p {
-    padding: 20px;
-}
-
 #pickRoom {
     cursor: default;
 }
