@@ -1,59 +1,93 @@
-const socket = io();
+let socket = io();
 let rows;
 let currentRow;
 let hadNewWord = false;
+let room = null;
+
+function joinRoom() {
+    const newRoom = $("#roomName").val();
+    let url = window.location.href;
+    url = url.replace(/([?&])(room=.*)($|&)/g, "$1");
+    if (url.indexOf('?') > -1) {
+        url += `&room=${encodeURIComponent(newRoom)}`;
+    } else {
+        url += `?room=${encodeURIComponent(newRoom)}`;
+    }
+    window.location.href = url;
+}
+
+function leaveRoom() {
+    let url = window.location.href;
+    url = url.replace(/([?&])(room=.*)($|&)/g, "$1");
+    window.location.href = url;
+}
 
 $(document).ready(() => {
-    $(document.body).keypress((event) => {
-        if ($(event.target).closest('#controls').length) {
-            return;
-        }
-        const key = event.key.toUpperCase()
-        if (key.length === 1 && "A" <= key && key <= "Z") {
-            rows[currentRow].addLetter(key);
-        }
+
+    $("#roomName").on("keyup change", function() {
+        $("#joinRoom").attr("disabled", !$(this).val())
     });
 
-    $(document.body).keyup((event) => {
-        if ($(event.target).closest('#controls').length) {
-            return;
-        }
-        if (event.keyCode == 8) { // Backspace
+    const urlParams = new URLSearchParams(window.location.search);
+    room = urlParams.get("room");
+
+    if (!room) {
+        $("#overlay #pickRoom").removeClass("hidden");
+        openOverlay();
+    } else {
+        socket.emit("room", room);
+
+        $(document.body).keypress((event) => {
+            if ($(event.target).closest('#controls').length) {
+                return;
+            }
+            const key = event.key.toUpperCase()
+            if (key.length === 1 && "A" <= key && key <= "Z") {
+                rows[currentRow].addLetter(key);
+            }
+        });
+
+        $(document.body).keyup((event) => {
+            if ($(event.target).closest('#controls').length) {
+                return;
+            }
+            if (event.keyCode == 8) { // Backspace
+                rows[currentRow].removeLetter();
+            }
+            else if (event.keyCode == 13) {
+                rows[currentRow].submit();
+            }
+        });
+
+        $("#keys .keyRow:not(:last-of-type) div").click(function () {
+            rows[currentRow].addLetter($(this).text());
+        }).each(function () {
+            $(this).attr("data-letter", $(this).text());
+        });
+
+        $("#backspace").click(function () {
             rows[currentRow].removeLetter();
-        }
-        else if (event.keyCode == 13) {
+        });
+
+        $("#enter").click(function () {
             rows[currentRow].submit();
-        }
-    });
+        });
 
-    $("#keys .keyRow:not(:last-of-type) div").click(function() {
-        rows[currentRow].addLetter($(this).text());
-    }).each(function() {
-        $(this).attr("data-letter", $(this).text());
-    });
+        $("#overlay").click(() => {
+            closeOverlay();
+        })
 
-    $("#backspace").click(function() {
-        rows[currentRow].removeLetter();
-    });
+        $("#newWord").submit(function (event) {
+            const word = $(this).find("input").val();
+            socket.emit("newWord", word);
+            $(this).find("input").val("");
+            event.preventDefault();
+        });
 
-    $("#enter").click(function() {
-        rows[currentRow].submit();
-    });
-
-    $("#overlay").click(() => {
-        closeOverlay();
-    })
-
-    $("#newWord").submit(function (event) {
-        const word = $(this).find("input").val();
-        socket.emit("newWord", word);
-        $(this).find("input").val("");
-        event.preventDefault();
-    });
-
-    $("#newRandomWord").click(() => {
-        socket.emit("newRandomWord");
-    })
+        $("#newRandomWord").click(() => {
+            socket.emit("newRandomWord");
+        })
+    }
 });
 
 const setUpGrid = () => {
@@ -70,7 +104,7 @@ socket.on("connect", () => {
 
 socket.on("validation", (types, i, str) => {
     let won = true;
-    for (let i=0; i<str.length; i++) {
+    for (let i = 0; i < str.length; i++) {
         const elt = $(`div[data-letter='${str[i]}']`);
         if (!elt.hasClass("green")) {
             elt.removeClass("grey");
@@ -103,7 +137,7 @@ socket.on("invalid", () => {
         closeOverlay();
     }, 1000);
     openOverlay();
-rows[currentRow].clear();
+    rows[currentRow].clear();
 });
 
 socket.on("newWord", () => {

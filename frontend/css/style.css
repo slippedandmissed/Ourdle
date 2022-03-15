@@ -170,7 +170,7 @@ button {
     transform: translate(-50%, -50%);
     background-color: black;
     width: min(500px, 90vw);
-    height: min(500px, 90vh);
+    height: min(max(500px, max-content), 90vh);
     border-radius: 50px;
     display: flex;
     align-items: center;
@@ -196,7 +196,11 @@ button {
     flex-direction: column;
 }
 
-button:hover {
+button:disabled {
+    color: grey;
+}
+
+button:not(:disabled):hover {
     transform: scale(1.1);
 }
 
@@ -214,4 +218,22 @@ button:hover {
 
 .grey {
     background-color: #8a8a8a!important;
+}
+
+#leaveRoom {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+
+#joinRoom {
+    margin: 20px;
+}
+
+#pickRoom p {
+    padding: 20px;
+}
+
+#pickRoom {
+    cursor: default;
 }

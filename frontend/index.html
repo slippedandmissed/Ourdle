@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Play Wordle with Friends!">
+    <meta name="author" content="Morgan Saville">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,14 +26,47 @@
 </head>
 
 <body>
+    <button id="leaveRoom" onclick="leaveRoom()">Leave Room</button>
     <main>
         <h1>Ourdle 😊</h1>
         <div id="grid"></div>
         <div id="keys">
-            <div class="keyRow"><div>Q</div><div>W</div><div>E</div><div>R</div><div>T</div><div>Y</div><div>U</div><div>I</div><div>O</div><div>P</div></div>
-            <div class="keyRow"><div>A</div><div>S</div><div>D</div><div>F</div><div>G</div><div>H</div><div>J</div><div>K</div><div>L</div></div>
-            <div class="keyRow"><div>Z</div><div>X</div><div>C</div><div>V</div><div>B</div><div>N</div><div>M</div></div>
-            <div class="keyRow"><div id="backspace">Backspace</div><div id="enter">Enter</div></div>
+            <div class="keyRow">
+                <div>Q</div>
+                <div>W</div>
+                <div>E</div>
+                <div>R</div>
+                <div>T</div>
+                <div>Y</div>
+                <div>U</div>
+                <div>I</div>
+                <div>O</div>
+                <div>P</div>
+            </div>
+            <div class="keyRow">
+                <div>A</div>
+                <div>S</div>
+                <div>D</div>
+                <div>F</div>
+                <div>G</div>
+                <div>H</div>
+                <div>J</div>
+                <div>K</div>
+                <div>L</div>
+            </div>
+            <div class="keyRow">
+                <div>Z</div>
+                <div>X</div>
+                <div>C</div>
+                <div>V</div>
+                <div>B</div>
+                <div>N</div>
+                <div>M</div>
+            </div>
+            <div class="keyRow">
+                <div id="backspace">Backspace</div>
+                <div id="enter">Enter</div>
+            </div>
         </div>
         <div id="controls">
             <form id="newWord">
@@ -53,6 +88,14 @@
                 </div>
                 <div id="invalidWord" class="hidden">
                     <h1>That's not in the word list 😭</h1>
+                </div>
+                <div id="pickRoom" class="hidden">
+                    <h1>Play Wordle with Friends!</h1>
+                    <p>This started off as a game for just me and my girlfriend, but we noticed some more people stumbled across it and we wanted to share the fun</p>
+                    <p>Type in a room name below to create or join a private game!</p>
+                    <p>Hope you enjoy!</p>
+                    <input id="roomName" type="text" placeholder="room">
+                    <button disabled id="joinRoom" onclick="joinRoom()">Join</button>
                 </div>
             </div>
         </div>
