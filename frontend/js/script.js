@@ -24,7 +24,7 @@ function leaveRoom() {
 
 $(document).ready(() => {
 
-    $("#roomName").on("keyup change", function() {
+    $("#roomName").on("keyup change", function () {
         $("#joinRoom").attr("disabled", !$(this).val())
     });
 
@@ -36,7 +36,7 @@ $(document).ready(() => {
         openOverlay();
     } else {
         socket.emit("room", room);
-
+        $("#leaveRoom").removeClass("hidden");
         $(document.body).keypress((event) => {
             if ($(event.target).closest('#controls').length) {
                 return;
